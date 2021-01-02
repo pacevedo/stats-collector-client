@@ -52,16 +52,16 @@ export default {
   methods: {
     updateTable () {
       try {
-          const {competition, season} = this.filter
-          if (competition !== "" && season !== "") {
-            const url = Routes.getURLNumMatches(competition, season)
-            Routes.axiosInstance.get(url).then(res => {
-              this.rounds = res.data
-            })
-          }
-        } catch (error) {
-          console.error(error)
+        const {competition, season} = this.filter
+        if (competition !== "" && season !== "") {
+          const url = Routes.getURLNumMatches(competition, season)
+          Routes.axiosInstance.get(url).then(res => {
+            this.rounds = res.data
+          })
         }
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 }

@@ -1,21 +1,15 @@
 <template>
   <h2>Stats collector</h2>
-  <div class="container">
-    <round-form />
-    <round-table />
+  <div id="nav">
+    <router-link to="/">Round collector</router-link> |
+    <router-link to="/player">Player collector</router-link> |
   </div>
+  <router-view />
 </template>
 
 <script>
-import RoundForm from './components/RoundForm.vue'
-import RoundTable from './components/RoundTable.vue'
-
 export default {
-  name: 'App',
-  components: {
-	RoundForm,
-	RoundTable
-  }
+  name: 'App'
 }
 </script>
 
@@ -57,10 +51,6 @@ button:disabled {
   background-color: #aaa6a6;
   color: #000;
 }
-.container {
-  display: grid;
-  grid-template-columns: 200px auto
-}
 label {
   display: block;
 }
@@ -78,4 +68,20 @@ select.form-control {
 .row {
   margin: 10px;
 }
+#loading {
+  width: 40px;
+  margin-left: 20px;
+}
+#nav {
+  text-align: center;
+  font-size: 14px;
+}
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+#nav a.router-link-exact-active {
+  color: #bd910f;
+}
+
 </style>

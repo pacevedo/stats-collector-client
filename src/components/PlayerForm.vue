@@ -1,26 +1,26 @@
 <template>
-  <div id="round-form">
+  <div id="player-form">
     <form @submit.prevent="sendForm">
       <div>
         <div class="row">
           <label>Season</label>
-          <input v-model="season" type="text" class="form-control" />
+          <input v-model="season" type="text" class="form-control" @blur="updateTeams"/>
         </div>
         <div class="row">
           <label>Competition</label>
-          <select v-model="competition" class="form-control">
+          <select v-model="competition" class="form-control" @change="updateTeams">
             <option v-for="nameCompetition in competitions" :key="nameCompetition" :value="nameCompetition">
               {{nameCompetition}}
             </option>
           </select>
         </div>
         <div class="row">
-          <label>Phase</label>
-          <input v-model="phase" type="text" class="form-control" />
-        </div>
-        <div class="row">
-          <label>Round</label>
-          <input v-model="round" type="text" class="form-control" />
+          <label>Team</label>
+          <select v-model="codeteam" class="form-control">
+          <option v-for="team in teams" :key="team.codeteam" :value="team.codeteam">
+              {{team.name}}
+            </option>
+          </select>
         </div>
         <div class="row">
           <button :disabled="isLoading">Add</button>
@@ -29,8 +29,8 @@
     </form>
     <div>
       <ul>
-        <li v-for="idMatch of matchesSaved" :key="idMatch">
-          {{idMatch}}
+        <li v-for="idPlayer of playersSaved" :key="idPlayer">
+          {{idPlayer}}
         </li>
       </ul>
       <img v-if="isLoading" src="../assets/loading.svg" alt="Loading" id="loading"/>
@@ -43,15 +43,15 @@
   import Routes from '@/components/Routes.js'
 
   export default {
-    name: 'round-form',
+    name: 'player-form',
     data() {
       return {
         competitions: Competitions.get(),
+        teams: [],
         season: '',
         competition: '',
-        phase: '',
-        round: '',
-        matchesSaved: [],
+        codeteam: '',
+        playersSaved: [],
         isLoading: false,
       }
     },
@@ -59,15 +59,27 @@
       sendForm () {
         try {
           this.isLoading = true
-          this.matchesSaved = []
-          const url = Routes.getURLSaveRound(this.competition, this.round, this.phase, this.season)
+          this.playersSaved = []
+          const url = Routes.getURLSavePlayers(this.competition, this.codeteam, this.season)
           Routes.axiosInstance.post(url).then(res => {
-            this.matchesSaved = res.data
+            this.playersSaved = res.data
             this.isLoading = false
           })
         } catch (error) {
           console.error(error)
           this.isLoading = false
+        }
+      },
+      updateTeams () {
+        try {
+          if (this.competition !== "" && this.season !== "") {
+            const url = Routes.getURLPendingTeams(this.competition, this.season)
+            Routes.axiosInstance.get(url).then(res => {
+              this.teams = res.data
+            })
+          }
+        } catch (error) {
+          console.error(error)
         }
       }
     }
