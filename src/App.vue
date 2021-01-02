@@ -1,15 +1,20 @@
 <template>
   <h2>Stats collector</h2>
-  <round-form />
+  <div class="container">
+    <round-form />
+    <round-table />
+  </div>
 </template>
 
 <script>
 import RoundForm from './components/RoundForm.vue'
+import RoundTable from './components/RoundTable.vue'
 
 export default {
   name: 'App',
   components: {
-    RoundForm
+	RoundForm,
+	RoundTable
   }
 }
 </script>
@@ -47,5 +52,30 @@ button:hover {
 button:active {
 	position:relative;
 	top:1px;
+}
+button:disabled {
+  background-color: #aaa6a6;
+  color: #000;
+}
+.container {
+  display: grid;
+  grid-template-columns: 200px auto
+}
+label {
+  display: block;
+}
+.form-control {
+  background: burlywood;
+  border: 1px solid darkslategray;
+  margin-top: 5px;
+}
+input.form-control {
+  width: 160px;
+}
+select.form-control {
+  width: 166px;
+}
+.row {
+  margin: 10px;
 }
 </style>
