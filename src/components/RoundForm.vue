@@ -33,7 +33,7 @@
           {{idMatch}}
         </li>
       </ul>
-      <img v-if="isLoading" src="../assets/loading.svg" alt="Loading" id="loading"/>
+      <img v-if="isLoading" src="../assets/loading.svg" alt="Loading" class="loading"/>
     </div>
   </div>
 </template>

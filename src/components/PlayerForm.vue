@@ -33,8 +33,12 @@
           {{idPlayer}}
         </li>
       </ul>
-      <img v-if="isLoading" src="../assets/loading.svg" alt="Loading" id="loading"/>
+      <img v-if="isLoading" src="../assets/loading.svg" alt="Loading" class="loading"/>
     </div>
+  </div>
+  <div>
+    <button :disabled="isLoadingRefresh" @click="refreshTeams" style="margin-top: 167px">Refresh</button>
+    <img v-if="isLoadingRefresh" src="../assets/loading.svg" alt="Loading" class="loading"/>
   </div>
 </template>
 
@@ -53,6 +57,7 @@
         codeteam: '',
         playersSaved: [],
         isLoading: false,
+        isLoadingRefresh: false
       }
     },
     methods: {
@@ -80,6 +85,19 @@
           }
         } catch (error) {
           console.error(error)
+        }
+      },
+      refreshTeams () {
+        try {
+          this.isLoadingRefresh = true
+          const url = Routes.path+Routes.refresh
+          Routes.axiosInstance.put(url).then(res => {
+            console.log(res.data)
+            this.isLoadingRefresh = false
+          })
+        } catch (error) {
+          console.error(error)
+          this.isLoadingRefresh = false
         }
       }
     }

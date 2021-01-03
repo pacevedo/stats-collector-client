@@ -2,7 +2,7 @@
   <h2>Stats collector</h2>
   <div id="nav">
     <router-link to="/">Round collector</router-link> |
-    <router-link to="/player">Player collector</router-link> |
+    <router-link to="/player">Player collector</router-link>
   </div>
   <router-view />
 </template>
@@ -68,7 +68,7 @@ select.form-control {
 .row {
   margin: 10px;
 }
-#loading {
+.loading {
   width: 40px;
   margin-left: 20px;
 }
